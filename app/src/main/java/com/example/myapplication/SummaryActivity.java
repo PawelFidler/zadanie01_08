@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
+
 import java.util.Random;
 
 public class SummaryActivity extends AppCompatActivity {
@@ -59,3 +61,15 @@ public class SummaryActivity extends AppCompatActivity {
         setResult(RESULT_OK, result);
         finish();                      // dopiero finish odsyła wynik
     }
+    private void share() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, tvSummary.getText().toString());
+
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.error_no_app, Toast.LENGTH_SHORT).show();
+        }
+    }
+}
